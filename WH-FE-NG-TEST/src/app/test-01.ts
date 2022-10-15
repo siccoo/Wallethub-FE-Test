@@ -12,8 +12,8 @@ import { RouterModule } from "@angular/router";
   selector: "ng-app",
   template: `<div>
     <h2>Loan Details</h2>
-    <b>Monthly Payment:</b> {{ monthly_payment | currency}} <br />
-    <b>Late Payment Fee : {{ late_payment | currency}}</b> <br />
+    <b>Monthly Payment:</b> {{ monthly_payment | currency }} <br />
+    <b>Late Payment Fee : {{ late_payment | currency }}</b> <br />
   </div>`,
 })
 export class Test01Component {
@@ -26,7 +26,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 import { formatCurrency, getCurrencySymbol } from "@angular/common";
 
 @Pipe({
-    name: 'currency'
+  name: "currency",
 })
 export class CurrencyComponent implements PipeTransform {
   transform(
