@@ -7,9 +7,23 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-function DataList(props) {
+interface Props {
+  data: {
+    name: string;
+    age: number;
+  }[];
+}
+
+function DataList(props: Props) {
+  const { data } = props
   return (
-    <h2>code goes here</h2>
+    <ul>
+      {data?.map(({ name, age }) => (
+        <li key={name}>
+          <span>{name}</span>&nbsp;<span>{age}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -20,6 +34,6 @@ const data = [
 ];
 
 ReactDOM.render(
-  <DataList data={ data } />,
+  <DataList data={data} />,
   document.getElementById('test-01')
 );
