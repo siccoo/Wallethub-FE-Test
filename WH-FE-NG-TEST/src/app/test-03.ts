@@ -28,7 +28,7 @@ import { CommonModule } from "@angular/common";
       name="email"
     />
     <p>
-        <small style="color: ">{{ solution.email.message }}</small>
+        <small style="color: #ff0000">{{ solution.email.message }}</small>
     </p>
     <br />
     <input
@@ -38,7 +38,7 @@ import { CommonModule } from "@angular/common";
       name="password"
     />
     <p>
-        <small style="color: ">{{ solution.password.message }}</small>
+        <small style="color: #ff0000">{{ solution.password.message }}</small>
     </p>
     <button (click)="handleSubmit($event)" type="submit">Submit</button>
     <br /><br />
