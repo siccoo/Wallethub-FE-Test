@@ -6,16 +6,31 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+interface CounterProps {
+  counter: number;
+}
+
 class Counter extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  state: CounterProps = { counter: 0 };
+
+  handleIncrement = () => {
+    this.setState((prevState: CounterProps) => {
+      return {
+        ...prevState,
+        counter: prevState.counter + 1
+      }
+    })
+  }
+
   render() {
     return (
       <div id="mainArea">
-        <p>button count: <span>0</span></p>
-        <button id="mainButton">Increase</button>
+        <p>button count: <span>{this.state.counter}</span></p>
+        <button id="mainButton" onClick={this.handleIncrement}>Increase</button>
       </div>
     );
   }
