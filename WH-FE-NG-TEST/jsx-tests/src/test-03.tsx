@@ -13,6 +13,12 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+interface UserProps {
+    userLastname: string;
+    userFirstname: string;
+    userPhone: string;
+}
+
 const style = {
     table: {
         borderCollapse: "collapse"
@@ -47,15 +53,37 @@ const style = {
 } as const;
 
 function PhoneBookForm({ addEntryToPhoneBook }) {
+    const [formData, setFormData] = useState({
+        userFirstname: "Coder",
+        userLastname: "Byte",
+        userPhone: "8885559999",
+    });
+
+    const handleChange = (e) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
     return (
-        <form onSubmit={e => { e.preventDefault() }} style={style.form.container}>
+        <form
+            onSubmit={e => {
+                e.preventDefault();
+                addEntryToPhoneBook(formData);
+            }}
+            style={style.form.container}
+        >
             <label>First name:</label>
             <br />
             <input
                 style={style.form.inputs}
                 className='userFirstname'
                 name='userFirstname'
+                onChange={handleChange}
                 type='text'
+                value={formData.userFirstname}
+                required
             />
             <br />
             <label>Last name:</label>
@@ -64,7 +92,10 @@ function PhoneBookForm({ addEntryToPhoneBook }) {
                 style={style.form.inputs}
                 className='userLastname'
                 name='userLastname'
+                onChange={handleChange}
                 type='text'
+                value={formData.userLastname}
+                required
             />
             <br />
             <label>Phone:</label>
@@ -73,7 +104,10 @@ function PhoneBookForm({ addEntryToPhoneBook }) {
                 style={style.form.inputs}
                 className='userPhone'
                 name='userPhone'
+                onChange={handleChange}
                 type='text'
+                value={formData.userPhone}
+                required
             />
             <br />
             <input
@@ -86,7 +120,11 @@ function PhoneBookForm({ addEntryToPhoneBook }) {
     )
 }
 
-function InformationTable(props) {
+interface InformationTableProps {
+    users: UserProps[];
+}
+
+function InformationTable({ users }: InformationTableProps) {
     return (
         <table style={style.table} className='informationTable'>
             <thead>
@@ -96,17 +134,40 @@ function InformationTable(props) {
                     <th style={style.tableCell}>Phone</th>
                 </tr>
             </thead>
+            <tbody>
+                {users?.map(({ userFirstname, userLastname, userPhone }) => {
+                    return (
+                        <tr>
+                            <th style={style.tableCell}>{userFirstname}</th>
+                            <th style={style.tableCell}>{userLastname}</th>
+                            <th style={style.tableCell}>{userPhone}</th>
+                        </tr>
+                    )
+                })}
+            </tbody>
         </table>
     );
 }
 
 function Application(props) {
+    const [users, setUsers] = useState<UserProps[]>([]);
+
+    const addEntryToPhoneBook = (detail: UserProps) => {
+        setUsers((prevData: UserProps[]) => {
+            // binary search for maintaining sorted array on insert
+            return [...prevData, detail].sort(sort);
+        });
+    };
     return (
         <section>
-            <PhoneBookForm addEntryToPhoneBook="" />
-            <InformationTable />
+            <PhoneBookForm addEntryToPhoneBook={addEntryToPhoneBook} />
+            <InformationTable users={users} />
         </section>
     );
+}
+
+function sort(elementA, elementB) {
+    return elementA.userLastname.localeCompare(elementB.userLastname);
 }
 
 ReactDOM.render(
