@@ -66,9 +66,10 @@ export class TextChildComponent {
     }
 
     ngAfterViewInit() {
-        if(this.skip) this._srv.SetTest("angular test #6");
+        setTimeout(() => {
+            if(this.skip) this._srv.SetTest("angular test #6");
+        }, 0);
     }
-
 }
 
 @NgModule({
