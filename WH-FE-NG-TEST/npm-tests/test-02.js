@@ -9,7 +9,14 @@ import https from "https";
 
 https.get('https://coderbyte.com/api/challenges/json/rest-get-simple', (resp) => {
     let data = "";
-    
-    // parse json and print "hobbies" property as ITEM1, ITEM2,...
-    console.log();
+    resp.on("data", (chunk) => {
+        data += chunk;
+    });
+    resp.on("end", () => {
+        // to String will work, but there would be a space after the word
+        const hobbies = JSON.parse(data).hobbies.join(", ");
+        console.log(hobbies);
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    })
 })
