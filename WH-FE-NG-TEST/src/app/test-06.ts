@@ -70,37 +70,48 @@ At https://wallethub.com <b>bolded text</b>`;
     let returnText, returnPatternOne, returnPatternTwo, returnPatternThree;
 
     //URLs starting with http:// or https://
-    returnPatternOne = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    returnText = inputText.replace(returnPatternOne, '<a href="$1" target="_blank">$1</a>');
+    returnPatternOne =
+      /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    returnText = inputText.replace(
+      returnPatternOne,
+      '<a href="$1" target="_blank">$1</a>'
+    );
 
     //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
     returnPatternTwo = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-    returnText = returnText.replace(returnPatternTwo, '$1<a href="http://$2" target="_blank">$2</a>');
+    returnText = returnText.replace(
+      returnPatternTwo,
+      '$1<a href="http://$2" target="_blank">$2</a>'
+    );
 
     //Change email addresses to mailto:: links.
-    returnPatternThree = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
-    returnText = returnText.replace(returnPatternThree, '<a href="mailto:$1">$1</a>');
+    returnPatternThree =
+      /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+    returnText = returnText.replace(
+      returnPatternThree,
+      '<a href="mailto:$1">$1</a>'
+    );
 
     return returnText;
   }
 
   /**
-     * Strips html tags off string. removes style and script content completely
-     * @param {string} rawString 
-     * @returns string
-     */
-    cleanHtml = (rawString) => {
-        let cleanedString = rawString.replace(
-            /<script([\S\s]*?)>([\S\s]*?)<\/script>/gi,
-            ""
-        );
-        cleanedString = cleanedString.replace(
-            /<style([\S\s]*?)>([\S\s]*?)<\/style>/gi,
-            ""
-        );
-        cleanedString = cleanedString.replace(/<(?:.|\s)*?>/gi, "");
-        return this.linkElements(cleanedString);
-    }
+   * Strips html tags off string. removes style and script content completely
+   * @param {string} rawString
+   * @returns string
+   */
+  cleanHtml = (rawString) => {
+    let cleanedString = rawString.replace(
+      /<script([\S\s]*?)>([\S\s]*?)<\/script>/gi,
+      ""
+    );
+    cleanedString = cleanedString.replace(
+      /<style([\S\s]*?)>([\S\s]*?)<\/style>/gi,
+      ""
+    );
+    cleanedString = cleanedString.replace(/<(?:.|\s)*?>/gi, "");
+    return this.linkElements(cleanedString);
+  };
 
   ngOnInit() {
     this.review_content = this.cleanHtml(this.review_input);
