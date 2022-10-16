@@ -179,7 +179,7 @@ p, a {
 }
 
 .section .section__card .section__card__title {
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .section .section__card .section__card__title sup {
@@ -250,9 +250,9 @@ p, a {
 }
 
 .section .section__card .section__card__body ul {
-    font-size: 20px; 
+    font-size: 24px; 
     list-style: disc; 
-    line-height: 25px;
+    line-height: 30px;
     padding-left: 20px;
 }
 
@@ -281,6 +281,10 @@ p, a {
     .section .section__title {
         font-size: 20px;
         padding: 0px 15px 0px 15px;
+    }
+
+    .section .section__card .section__card__title {
+        font-size: 20px;
     }
 
     .section .section__card .section__card__body {
